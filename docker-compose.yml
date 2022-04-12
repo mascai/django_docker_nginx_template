@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  django:
+    build: ./project # path to Dockerfile
+    command: sh -c "gunicorn --bind 0.0.0.0:8000 core_app.wsgi"
+    volumes:
+      - ./project:/project
+      - static:/project/static
+    expose:
+      - 8000
+    environment: 
+      - DATABASE_URL=postgres://postgres:post222@db:5432/lk_potok_4"
+      - DEBUG=1
+  
+  db:
+    image: postgres:13-alpine
+    volumes:
+      - pg_data:/var/lib/postgresql/data/
+    expose: 
+      - 5432
+    environment: 
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=post222
+      - POSTGRES_DB=lk_potok_4
+  
+  nginx:
+    image: nginx:1.19.8-alpine
+    depends_on: 
+      - django
+    ports: 
+      - "80:80"
+    volumes:
+      - static:/var/www/html/static
+      - ./nginx-conf.d/:/etc/nginx/conf.d
+
+volumes:
+    pg_data:
+    static:
