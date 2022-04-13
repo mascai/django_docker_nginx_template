@@ -3,10 +3,13 @@ version: '3.9'
 services:
   django:
     build: ./project # path to Dockerfile
-    command: sh -c "gunicorn --bind 0.0.0.0:8000 core_app.wsgi"
+    command: sh -c "
+      python manage.py makemigrations
+      && python manage.py migrate  
+      && gunicorn --bind 0.0.0.0:8000 core_app.wsgi"
     volumes:
       - ./project:/project
-      - static:/project/static
+      - ./project/static:/project/static
     expose:
       - 8000
     environment: 
@@ -31,8 +34,8 @@ services:
     ports: 
       - "80:80"
     volumes:
-      - static:/var/www/html/static
-      - ./nginx-conf.d/:/etc/nginx/conf.d
+      - ./project/static:/var/www/html/static
+      - ./project/nginx-conf.d/:/etc/nginx/conf.d
 
 volumes:
     pg_data:

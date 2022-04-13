@@ -85,7 +85,14 @@ WSGI_APPLICATION = 'core_app.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db(),
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'lk_potok_4',
+        'USER': 'postgres',
+        'PASSWORD': 'post222',
+        'HOST': 'db',
+        'PORT': 5432, 
+    }
 }
 
 
