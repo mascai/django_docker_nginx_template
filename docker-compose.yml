@@ -36,6 +36,23 @@ services:
     volumes:
       - ./project/static:/var/www/html/static
       - ./project/nginx-conf.d/:/etc/nginx/conf.d
+  
+  celery:
+    build: ./project
+    command: celery -A core_app worker  --loglevel=info
+    volumes:
+      - ./project:/usr/src/app
+    environment:
+      - DEBUG=1
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/0
+    depends_on:
+      - django
+      - redis
+
+  redis:
+    image: redis:5-alpine
 
 volumes:
     pg_data:

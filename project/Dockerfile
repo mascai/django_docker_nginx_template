@@ -10,7 +10,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 COPY . .
 
 # install postgres, libs and forbid cache
-RUN apk add --update --no-cache --virtual .tmp-build-deps \
+RUN apk add --update  --virtual .tmp-build-deps \
     gcc libc-dev linux-headers postgresql-dev && \
-    pip install --no-cache-dir -r requirements.txt
+    pip install  -r requirements.txt
 
