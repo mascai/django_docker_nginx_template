@@ -39,7 +39,6 @@ services:
   
   celery:
     build: ./project
-    command: celery worker --app=core --loglevel=info
     command: celery -A core_app worker  --loglevel=info
     volumes:
       - ./project:/usr/src/app
