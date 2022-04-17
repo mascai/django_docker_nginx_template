@@ -1,16 +1,15 @@
-FROM python:3.9-alpine
+FROM python:3.9-slim-bullseye
 
 WORKDIR /project
 
 # forbid .pyc file recording
 # forbid bufferization
 ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONBUFFERED=1 
+    PYTHONBUFFERED=1
 
 COPY . .
 
-# install postgres, libs and forbid cache
-RUN apk add --update  --virtual .tmp-build-deps \
-    gcc libc-dev linux-headers postgresql-dev && \
-    pip install  -r requirements.txt
 
+RUN apt-get update && apt-get install --no-install-recommends -y \
+    gcc libc-dev libpq-dev  && apt-get install -y cron &&\
+    pip install --no-cache-dir -r requirements.txt
