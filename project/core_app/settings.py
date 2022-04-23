@@ -87,15 +87,13 @@ WSGI_APPLICATION = 'core_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'lk_potok_4',
-        'USER': 'postgres',
-        'PASSWORD': 'post222',
+        'NAME': os.environ['DB_NAME'],
+        'USER': os.environ['DB_USER'],
+        'PASSWORD': os.environ['DB_PASSWORD'],
         'HOST': 'db',
-        'PORT': 5432, 
+        'PORT': 5432,
     }
 }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 

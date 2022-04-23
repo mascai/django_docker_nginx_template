@@ -10,8 +10,8 @@ from parser_app.tasks import create_task
 def task(request):
     if request.method == 'POST':
         if "type" in request.data:
-            type_id = request.data["type"]
-            task = create_task.delay(int(type_id))
+            category_name = request.data["type"]
+            task = create_task.delay(category_name)
             return Response({"message": "Create task", "task_id": task.id, "data": request.data})
         else:
             return Response({"message": "Error, not found 'type' in POST request"})

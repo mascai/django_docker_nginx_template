@@ -9,3 +9,4 @@ psycopg2==2.9.3
 celery==5.2.6
 redis==3.4.1
 requests==2.23.0
+lxml==4.8.0
